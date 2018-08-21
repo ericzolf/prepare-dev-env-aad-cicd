@@ -8,9 +8,9 @@ app ansible_host=app1.{{ guid }}.internal
 appdb ansible_host=appdb1.{{ guid }}.internal
 
 [all:vars]
-ansible_ssh_private_key_file={{ remote_user_sshkey }}
+ansible_ssh_private_key_file={{ remote_user_sshkey | realpath }}
 ansible_user={{ remote_user }}
 guid={{ guid }}
 
 [apps:vars]
-ansible_ssh_common_args='-o ProxyCommand="ssh -i {{ remote_user_sshkey }} -W %h:%p -q {{ remote_user }}@bastion.{{ guid }}.example.opentlc.com"'
+ansible_ssh_common_args='-o ProxyCommand="ssh -i {{ remote_user_sshkey | realpath }} -W %h:%p -q {{ remote_user }}@bastion.{{ guid }}.example.opentlc.com"'
