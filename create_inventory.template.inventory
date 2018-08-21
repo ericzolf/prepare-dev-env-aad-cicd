@@ -1,0 +1,10 @@
+# change the guid and the ansible_user to your needs
+[all]
+bastion ansible_host=bastion.GUID.example.opentlc.com
+
+[all:vars]
+ansible_user=USERNAME
+guid=GUID
+# you should leave this one as is
+remote_user=ec2-user
+remote_user_sshkey=ec2-user_key.local.pem

@@ -1,0 +1,16 @@
+[all]
+bastion ansible_host=bastion.{{ guid }}.example.opentlc.com
+tower1 ansible_host=tower1.{{ guid }}.example.opentlc.com
+cicd1 ansible_host=cicd1.{{ guid }}.example.opentlc.com
+
+[apps]
+app ansible_host=app1.{{ guid }}.internal
+appdb ansible_host=appdb1.{{ guid }}.internal
+
+[all:vars]
+ansible_ssh_private_key_file={{ remote_user_sshkey }}
+ansible_user={{ remote_user }}
+guid={{ guid }}
+
+[apps:vars]
+ansible_ssh_common_args='-o ProxyCommand="ssh -i {{ remote_user_sshkey }} -W %h:%p -q {{ remote_user }}@bastion.{{ guid }}.example.opentlc.com"'

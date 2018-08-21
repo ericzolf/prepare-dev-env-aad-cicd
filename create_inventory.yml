@@ -1,0 +1,26 @@
+---
+- name: fetch the necessary from the hosts
+  hosts: all
+  become: yes
+  gather_facts: no
+  tasks:
+  - name: fetch private identity file for ec2-user from root
+    fetch:
+      dest: "{{ remote_user_sshkey }}"
+      flat: true
+      src: /root/.ssh/{{ guid }}key.pem
+
+- name: prepare localhost for Ansible
+  hosts: localhost
+  gather_facts: no
+  tasks:
+
+  - name: set the correct user rights for the local SSH key
+    file:
+      dest: "{{ remote_user_sshkey }}"
+      mode: go-rwx
+  - name: create local inventory from template
+    template:
+      dest: ansible-cicd-lab.local.inventory
+      src: ansible-cicd-lab.inventory.j2
+ 
