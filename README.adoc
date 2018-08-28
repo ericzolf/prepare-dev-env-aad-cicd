@@ -2,3 +2,16 @@ Call `./create_inventory.sh <GUID> <RHPDS-USERNAME>`
 e.g. `./create_inventory.sh e1bc hacker-redhat.com` after you've created your lab from https://rhpds.redhat.com/
 
 It will create an inventory file ansible-cicd-lab.local.inventory that you can use to develop and do first test of your playbooks and roles.
+
+After that you should be able to go to the AAD configs directory and test interactively changes to the playbooks lying there, e.g. like this:
+
+------------------------------------------------------------------------
+cd .../ansible_agnostic_deployer/ansible/configs/ansible-cicd-lab
+ansible-playbook -i .../prepare-dev-env-aad-cicd/ansible-cicd-lab.local.inventory \
+	post_software.yml \
+	-e ANSIBLE_REPO_PATH=../.. \
+	-e env_type=ansible-cicd-lab \
+	-e tower_admin_password=<USUALPASSWD> \
+	-e guid=<GUID> \
+	--tags=configure_tower
+------------------------------------------------------------------------
